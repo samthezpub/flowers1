@@ -1,0 +1,60 @@
+
+
+
+.navbar{
+    font-family: Montserrat;
+    font-size: 1.5em;
+    font-weight: 600;
+    line-height: 12.19px;
+    text-align: left;
+
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-evenly;
+
+    background-color: #FCEFE4;
+
+    padding: 8px;
+}
+
+.navbar .button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    font-family: Montserrat;
+    font-size: 1em;
+    font-weight: 700;
+    line-height: 29.26px;
+    text-align: center;
+
+    width: 250px;
+    height: 75px;
+
+    background: #D7537A;
+    color: #FFFFFF;
+
+    border: 0;
+    border-radius: 9999px;
+
+    cursor: pointer;
+}
+
+.navbar .logo{
+    cursor: pointer;
+}
+
+.navbar .list{
+    display: flex;
+    list-style: none;
+}
+
+.navbar .list .list_element{
+
+}
+
+.navbar .list .list_element:not(:last-child){
+    margin-right: 20px;
+}

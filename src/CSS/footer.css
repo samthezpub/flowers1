@@ -1,0 +1,80 @@
+.footer{
+    background-color: #FFF8F5;
+
+    font-size: 16px;
+
+
+
+    padding: 10px;
+}
+
+.footer .upper{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.footer .upper .info{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.footer .upper .info .footer_title{
+    font-family: Montserrat;
+    font-size: 1.75em;
+    font-weight: 600;
+    line-height: 43.88px;
+
+
+    margin: 0;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.footer .upper .info .footer_contacts{
+    font-family: Montserrat;
+    font-size: 1.25em;
+    font-weight: 600;
+    line-height: 29.26px;
+
+}
+
+.footer .upper .info .footer_contacts{
+    
+}
+
+.footer .upper .info .footer_contacts .footer_contact{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer .upper .info .footer_contacts .footer_contact:not(:last-child){
+    margin-bottom: 5px;
+}
+
+.footer .upper .info .footer_contacts .footer_contact .footer_contact_image{
+    margin-right: 5px;
+}
+
+.footer .upper .info .footer_social-media{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.footer .upper .info .footer_social-media .footer_social-media_element:not(:last-child){
+    margin-right: 20px;
+}
+
+.footer .upper .info .footer_copyright{
+    font-family: Montserrat;
+    font-size: 1.25em;
+    font-weight: 400;
+    line-height: 29.26px;
+
+    color: #272626;
+
+    padding-bottom: 20px;
+}
