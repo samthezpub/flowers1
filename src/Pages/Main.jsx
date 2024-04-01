@@ -1,4 +1,5 @@
-import {React, useState} from 'react'
+import {React, useState, useEffect} from 'react'
+import axios from 'axios';
 import {Container} from "@mui/material";
 import {List, Rating} from '@mui/material';
 import Box from '@mui/material/Box';
@@ -8,22 +9,23 @@ import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
 import Carousel from 'react-material-ui-carousel'
 import Item from '../Components/Item'
+import Gallery from '../Components/Gallery'
 
 
 import '../CSS/main.css'
 
 import main_bg from '../Pictures/Main/main-bg.png'
 
-import photo1 from '../Pictures/Main/Фото1.png'
-import photo2 from '../Pictures/Main/Фото2.png'
-import photo3 from '../Pictures/Main/Фото3.png'
+import photo1 from '../Pictures/Main/photo1.jpg'
+import photo2 from '../Pictures/Main/photo2.jpg'
+import photo3 from '../Pictures/Main/photo3.jpg'
 
 import lepestok1 from '../Pictures/Main/lepestok1.png'
 import lepestok2 from '../Pictures/Main/lepestok2.png'
 import lepestok3 from '../Pictures/Main/lepestok3.png'
 import lepestok4 from '../Pictures/Main/lepestok4.png'
 
-import feedback_image from '../Pictures/Main/feedback-bg.png'
+import feedback_image from '../Pictures/Main/feedback-bg.jpg'
 
 const style = {
     position: 'absolute',
@@ -44,26 +46,72 @@ export default function Main() {
 
     const [modalRatingValue, setModalRatingValue] = useState(4);
 
-    const reviewList = [
-        {
-            name: 'Алексей',
-            text: 'Отличная компания! Я очень доволен качеством обслуживания.',
-            rating: 5,
-        },
-        {
-            name: 'Андрей',
-            text: 'Я рекомендую эту компанию всем своим друзьям.',
-            rating: 4,
-        },
-        {
-            name: 'Ирина',
-            text: 'Я очень довольна покупкой. Спасибо!',
-            rating: 5,
-        },
-    ];
+    const [reviewList, setReviewList] = useState([])
+
+    const [slides, setSlides] = useState([])
+
+    useEffect(() => {
+        getAllReviews()
+    }, []);
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function positionSort(reviewList) {
+        return reviewList.sort(function (a, b) {
+            if (a.position < b.position) {
+                return -1;
+            } else if (a.position > b.position) {
+                return 1;
+            } else {
+                return 0;
+            }
+        })
+    }
+
+    async function getAllReviews() {
+        await sleep(1000);
+
+        // Get CSRF token
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        let repsonce = axios.get("http://test-flowers.web-command.ru/api/rating/getAllReview", {
+
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken // Include CSRF token in headers
+            },
+            data: {
+                _token: csrfToken
+            }
+
+        })
+            .then((resp) => {
+
+                let reviewList = resp.data; // Ваш массив с данными отзывов
+                console.log(reviewList)
+
+                let filteredReviews = reviewList.filter(review => review.is_show);
+
+                // Сортировка по позиции
+                reviewList = positionSort(filteredReviews)
+                console.log(reviewList)
 
 
-    const [reviews, setReviews] = useState(reviewList);
+                let slidesTemp = [];
+
+                for (let i = 0; i < reviewList.length; i += 3) {
+                    slidesTemp.push(reviewList.slice(i, i + 3));
+                }
+
+                setSlides(slidesTemp)
+            })
+            .catch((error) => {
+                console.error('Ошибка при получении данных:', error);
+            });
+
+    }
 
     function submitForm() {
 
@@ -76,7 +124,7 @@ export default function Main() {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         // Send data to PHP script using AJAX
-        fetch('http://127.0.0.1:8000/api/greeting', {
+        fetch('http://test-flowers.web-command.ru/api/greeting', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -108,7 +156,7 @@ export default function Main() {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         // Send data to PHP script using AJAX
-        fetch('http://127.0.0.1:8000/api/rating', {
+        fetch('http://test-flowers.web-command.ru/api/rating', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -147,40 +195,34 @@ export default function Main() {
 
     return (
         <>
-            <Container id="main" className="main" disableGutters={true} maxWidth={false}>
-                <img className="main_bg" src={main_bg}/>
-
-                <div className="main_info">
-                    <p className="info_description">Подарите ощущение праздника</p>
-                    <h2 className="info_title">Собираем букеты, созданные для Вас</h2>
-                    <button className="info_button">Выбрать букет</button>
-                </div>
-            </Container>
-            <div className="our_bouquets" id="our_bouquets">
-                <Container maxWidth="xl">
-                    <h2 className="our_bouquets_title">Наши букеты</h2>
-
+            <section id="main" className="main">
+                <Container maxWidth={'xl'} style={{height: "100%", display: "flex", alignItems: "flex-end"}}>
+                    <div className="main_info">
+                        <h2 className="info_title">Собираем букеты, созданные для Вас</h2>
+                        <a className="info_button" href="#our_bouquets">Выбрать букет</a>
+                    </div>
+                </Container>
+            </section>
+            <section className="our_bouquets" id="our_bouquets">
+                <Container maxWidth={"xl"} style={{height: "100%"}}>
+                    <h2 className="our_bouquets_title">Наши работы</h2>
                     <div className="cards">
                         <img className="photo1" src={photo1} alt=""/>
                         <div className="card card1">
                             <span className="card_text">
-                                Вы можете выбрать любую цветочную композицию из нашего каталога или заказать свой
-                                вариант. Вы можете выбрать любую цветочную композицию из нашего каталога или заказать
-                                свой вариант
+                                Любой букет из клубники, цветов и других ягод можно собрать на любой бюджет, добавив ингредиенты на ваш вкус
                             </span>
                         </div>
 
 
                         <img className="photo2" src={photo2} alt=""/>
                         <div className="card card2">
-                            Вы можете выбрать любую цветочную композицию из нашего каталога или заказать свой
-                            вариант
+                            Любой мужской букет можно собрать на любой бюджет, добавив ингредиенты на ваш вкус
                         </div>
 
                         <img className="photo3" src={photo3} alt=""/>
                         <div className="card card3">
-                            Вы можете выбрать любую цветочную композицию из нашего каталога или заказать свой
-                            вариант
+                            Букет из фруктов и цветов можно собрать на любой бюджет, добавив ингредиенты на ваш вкус
                         </div>
                     </div>
                 </Container>
@@ -188,72 +230,90 @@ export default function Main() {
                 <img src={lepestok2} alt="" className="lepestok2"/>
                 <img src={lepestok3} alt="" className="lepestok3"/>
                 <img src={lepestok1} alt="" className="lepestok4"/>
-            </div>
+            </section>
 
-            <div className="delivery" id="delivery">
-                <Container>
-                    <div>
-                        <h2 className="delivery_title">Доставка</h2>
-                        <p className="delivery_description">Возьмём на себя все заботы по созданию, оформлению и
-                            доставке корпоративных букетов в обычные и праздничные дни за разумные деньги</p>
+            <section className="delivery" id="delivery">
+                <Container maxWidth={"x"} style={{display: "flex", alignItems: "center", height: "100%"}}>
+                    <div className="blocks">
+                        <div className="block">
+                            <h2 className="delivery_title">Доставка</h2>
+                            <p className="delivery_description">Возьмём на себя все заботы по созданию, оформлению и
+                                доставке корпоративных букетов в обычные и праздничные дни за разумные деньги</p>
+                        </div>
+                        <div className="block large_block">
+                            <h2 className="delivery_title">Инструкции по применению</h2>
+                            <p className="delivery_description">Хранить такие букеты лучше в прохладном месте (в
+                                холодильнике, сняв или надрезав прозрачную упаковку). А вот прямых солнечных лучей и
+                                жары они не любят. Часто в составе наших букетов присутствует живая и искусственная
+                                растительность - это декор. Все остальные ингредиенты в букетах - съедобные. Мы закупаем
+                                их персонально под каждый букет накануне сборки. Все ингредиенты и растительность
+                                обработана по специальному многочасовому протоколу.</p>
+                        </div>
                     </div>
                 </Container>
-            </div>
+            </section>
 
-            <div className="feedback" id="feedback">
-                <Container>
+            <section className="feedback" id="feedback">
+                <Container maxWidth={"x"} style={{display:"flex", alignItems:"center", justifyContent:"space-around"}}>
                     {/*<form method="post">*/}
 
-                    <h2 className="form_title">Предложи свой бюджет</h2>
-                    <div className="feedback-form">
-                        <div className="feedback_inputs">
-                            <input placeholder="Имя" className="feedback_input input" name="name" id="name"/>
-                            <input placeholder="Телефон" onChange={(event) => {
-                                ValidateInput(event)
-                            }} className="feedback_input input" name="phone" id="phone"/>
-                            <textarea placeholder="Ваша идея" className="feedback_large-input input" name="idea"
-                                      id="idea"/>
+                    <div>
+                        <h2 className="form_title">Предложи свой бюджет</h2>
+                        <div className="feedback-form">
+                            <div className="feedback_inputs">
+                                <input placeholder="Имя" className="feedback_input input" name="name" id="name"/>
+                                <input placeholder="Телефон" onChange={(event) => {
+                                    ValidateInput(event)
+                                }} className="feedback_input input" name="phone" id="phone"/>
+                                <textarea placeholder="Ваша идея" className="feedback_large-input input" name="idea"
+                                          id="idea"/>
+                            </div>
                         </div>
-
-                        <div className="background">
-                            <img src={feedback_image} alt="" className="image"/>
-                        </div>
+                        <button className="form_button" onClick={submitForm}>Отправить</button>
                     </div>
-                    <button className="form_button" onClick={submitForm}>Отправить</button>
+
+                    <div>
+                        <Gallery></Gallery>
+                    </div>
+
                     {/*</form>*/}
                 </Container>
-            </div>
+            </section>
 
-            <div className="reviews">
+            <section className="reviews">
                 <h2 className="reviews_title">Отзывы</h2>
-                <Container>
-                    <Carousel className="reviews_carousel"
-                              indicatorIconButtonProps={{
-                                  style: {
-                                      color: 'pink'       // 3
-                                  }
-                              }}
-                              activeIndicatorIconButtonProps={{
-                                  style: {
-                                      backgroundColor: 'crimson' // 2
-                                  }
-                              }}
-                              indicatorContainerProps={{
-                                  style: {
-                                      marginTop: '15px', // 5
-                                  }
+                <Container maxWidth="xl">
+                    <Carousel
+                        className="reviews_carousel"
+                        indicatorIconButtonProps={{
+                            style: {
+                                color: 'pink',
 
-                              }}
-                              navButtonsAlwaysInvisible={true}
-                              animation="slide"
-                              duration={1000}>
-                        {
-                            reviewList.map((item, i) => {
-                                    return (<Item key={i} item={item}/>)
-                                }
-                            )
-                        }
-
+                                marginTop: "10px"
+                            }
+                        }}
+                        activeIndicatorIconButtonProps={{
+                            style: {
+                                backgroundColor: 'crimson'
+                            }
+                        }}
+                        indicatorContainerProps={{
+                            style: {
+                                marginTop: '15px'
+                            }
+                        }}
+                        navButtonsAlwaysInvisible={true}
+                        animation="fade"
+                        duration={1000}
+                    >
+                        {slides.map((slide, index) => (
+                            <div key={index} style={{display: 'flex', justifyContent: "space-around", height: "300px"}}>
+                                {slide.map((item, i) => (
+                                    <Item key={i} name={item.client_name} rating={parseInt(item.rating)}
+                                          text={item.comment}/>
+                                ))}
+                            </div>
+                        ))}
                     </Carousel>
 
                     <button className="form_button" onClick={handleOpen}>Добавить отзыв</button>
@@ -314,7 +374,7 @@ export default function Main() {
                         </Box>
                     </Modal>
                 </Container>
-            </div>
+            </section>
         </>
     )
 }

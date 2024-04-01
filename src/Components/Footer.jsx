@@ -9,6 +9,8 @@ import clock from '../Pictures/Footer/clock.svg'
 import whatsapp from '../Pictures/Footer/whatsapp.png'
 import telegram from '../Pictures/Footer/telegram.png'
 
+import webcommand_logo from '../Pictures/Footer/Logo Green.svg'
+
 export default function Footer() {
     return (
         <footer className="footer" id="footer">
@@ -52,7 +54,12 @@ export default function Footer() {
                     width="500" height="400" frameBorder="0"></iframe>
             </div>
 
-            <div className="botton"></div>
+            <div className="bottom">
+                <p className="webcommand_description">Разработано в</p>
+                <a href="https://web-command.ru/">
+                    <img src={webcommand_logo}/>
+                </a>
+            </div>
         </footer>
     )
 }

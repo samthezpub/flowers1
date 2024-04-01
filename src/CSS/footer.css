@@ -78,3 +78,13 @@
 
     padding-bottom: 20px;
 }
+
+.footer .bottom{
+    margin-top: 20px;
+}
+
+
+.footer .bottom .webcommand_description{
+    font-family: Montserrat;
+    font-weight: 600;
+}

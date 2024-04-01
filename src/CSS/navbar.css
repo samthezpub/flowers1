@@ -19,19 +19,22 @@
     padding: 8px;
 }
 
+.navbar .logo_conctainer{
+}
+
 .navbar .button{
     display: flex;
     align-items: center;
     justify-content: center;
     
     font-family: Montserrat;
-    font-size: 1em;
+    font-size: 0.8em;
     font-weight: 700;
     line-height: 29.26px;
     text-align: center;
 
-    width: 250px;
-    height: 75px;
+    width: 200px;
+    height: 55px;
 
     background: #D7537A;
     color: #FFFFFF;
@@ -57,4 +60,10 @@
 
 .navbar .list .list_element:not(:last-child){
     margin-right: 20px;
+}
+
+.navbar .social-media{
+    width: 120px;
+    display: flex;
+    justify-content: space-around;
 }

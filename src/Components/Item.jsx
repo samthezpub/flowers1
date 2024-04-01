@@ -1,12 +1,12 @@
 import { Paper, Button, Rating } from '@mui/material'
 
-export default function Item(props)
+export default function Item({name, rating, text})
 {
     return (
         <div className="item">
-            <h2 className="item_title">{props.item.name}</h2>
-            <Rating value={props.item.rating} readOnly></Rating>
-            <p className="item_text">{props.item.text}</p>
+            <h2 className="item_title">{name}</h2>
+            <Rating value={rating} readOnly></Rating>
+            <p className="item_text">{text}</p>
 
         </div>
     )

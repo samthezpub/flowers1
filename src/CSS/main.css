@@ -5,27 +5,19 @@ body{
 .main{
     position: relative;
     height: 755px;
-}
-.main_bg{
-    width: 100%;
-    height: 875px;
 
-    z-index: 999;
-    position: absolute;
-    top: 0;
-    left: 0;
+    background: url("../Pictures/Main/main-bg.png");
+    background-position: bottom;
+    background-size: cover;
 }
 
 .main_info{
     width: 695px;
 
-    position: absolute;
-
-    bottom: 0;
-    left: 8%;
-
     display: flex;
     flex-direction: column;
+
+    padding-bottom: 16px;
 }
 
 .main_info .info_description{
@@ -49,6 +41,10 @@ body{
 }
 
 .main_info .info_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     font-family: Montserrat;
     font-size: 1em;
     font-weight: 700;
@@ -65,6 +61,7 @@ body{
     border-radius: 9999px;
 
     cursor: pointer;
+    z-index: 999;
 }
 
 .our_bouquets{
@@ -77,10 +74,13 @@ body{
 
     background-color: #FCEFE4;
 
-    padding-bottom: 16px;
+    height: 1600px;
 }
 
 .our_bouquets .our_bouquets_title{
+
+    margin: 0;
+
     padding-top: 32px;
     padding-bottom: 16px;
 
@@ -95,29 +95,40 @@ body{
     position: relative;
 
     font-size: 2em;
+
+    height: 100%;
 }
 
 .our_bouquets .photo1{
-    width: 563px;
+    width: 480px;
     height: 625px;
 
     align-self: end;
 
     margin-bottom: 65px;
+
 }
 .our_bouquets .photo2{
-    width: 697px;
-    height: 390px;
+    width: 490px;
+    height: 530px;
 
     align-self: start;
 
     margin-bottom: 65px;
+
+    position: absolute;
+    top: 35%;
+    left: 0;
 }
 .our_bouquets .photo3{
     width: 497px;
     height: 551px;
 
     align-self: end;
+
+    position: absolute;
+    bottom: 10%;
+    right: 0;
 }
 
 .our_bouquets .card{
@@ -148,13 +159,13 @@ body{
 }
 .our_bouquets .card2{
     position: absolute;
-    top: 50%;
-    right: 25%;
+    top: 45%;
+    right: 30%;
 }
 .our_bouquets .card3{
     position: absolute;
-    top: 75%;
-    right: 25%;
+    top: 73%;
+    right: 30%;
 }
 
 .our_bouquets .card .card_text{
@@ -198,36 +209,41 @@ body{
     background-size: cover;
     background-position: center;
 
-    position: relative;
+
 
 }
 
+.delivery .blocks{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.delivery .block{
+    width: 30%;
+
+}
+
+.delivery .large_block{
+    width: 45%;
+}
+
+
+
 .delivery .delivery_title{
     font-family: Montserrat;
-    font-size: 2.75em;
+    font-size: 1.5em;
     font-weight: 700;
     line-height: 58.51px;
     text-align: left;
 
-    margin: 0;
-
-    position: absolute;
-    top: 20%;
+    margin-top: 0;
 }
 
 .delivery .delivery_description{
     font-family: Montserrat;
-    font-size: 2em;
+    font-size: 1.25em;
     font-weight: 500;
-    line-height: 43.88px;
     text-align: left;
-
-    width: 759px;
-    height: 155px;
-
-    position: absolute;
-    top: 50%;
-    left: 25%;
 }
 
 .feedback {
@@ -256,7 +272,6 @@ body{
 .feedback-form .background{
     height: 450px;
 
-    background-image: url("../Pictures/Main/feedback-bg.png");
     background-size: cover;
 
     margin-left: 20px;
@@ -264,6 +279,9 @@ body{
 
 .feedback-form .background .image{
     height: 100%;
+
+    border-radius: 25px;
+    background-repeat: no-repeat;
 }
 
 .feedback-form .feedback_inputs{
@@ -365,7 +383,18 @@ textarea {
 }
 
 .reviews .reviews_carousel .item{
-    min-height: 150px;
+    min-height: 200px;
+    width: 25%;
+
+    background-color: #FCEFE4;
+    border: 1px solid #D7537A;
+    border-radius: 43px;
+
+    padding: 20px;
+
+    -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
 
 .reviews .reviews_carousel .item .item_title{
