@@ -90,4 +90,8 @@
         width: 20px;
         height: 20px;
     }
+
+    .navbar .social-media .footer_social-media_element:not(:last-child){
+        margin-right: 5px;
+    }
 }

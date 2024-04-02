@@ -497,6 +497,20 @@ textarea {
 }
 
 @media (min-width: 0px) and (max-width: 768px){
+    .main_info .info_title{
+        font-size: 2.5em;
+        line-height: 45px;
+    }
+
+    .main_info .info_button{
+        width: 40%;
+        height: 50px;
+    }
+
+    .our_bouquets .our_bouquets_title{
+        font-size: 1.75em;
+    }
+
     .our_bouquets .photo1 {
         width: 100%;
         max-width: 350px;
@@ -559,14 +573,20 @@ textarea {
 
     .feedback .form_title{
         margin: 0;
+
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        font-size: 1.75em;
     }
 
     .feedback .form_button{
+        margin-top: 25px;
         margin-bottom: 8px;
     }
 
     .feedback .feedback-form .feedback_inputs{
-        width: 100%;
+        width: 90%;
     }
 
     .feedback .feedback-form .feedback_inputs input{
@@ -577,6 +597,12 @@ textarea {
     .feedback .feedback-form .feedback_inputs .feedback_large-input{
         width: 100%;
         padding: 16px;
+    }
+
+    .feedback .form_button{
+        width: 35%;
+        height: 50px;
+
     }
 
     .feedback .img-container{
@@ -593,7 +619,7 @@ textarea {
     }
 
     .reviews .reviews_title{
-
+        font-size: 1.75em;
     }
 
     .reviews .reviews_carousel{
@@ -629,10 +655,19 @@ textarea {
 
     .reviews .reviews_carousel_min .item .item_title{
         margin: 0;
+        font-size: 1.25em;
     }
 
     .reviews .form_button{
         margin-bottom: 0;
+
+        font-size: 1em;
+        width: 200px;
+        height: 50px;
+    }
+
+    .reviews .reviews_carousel_min .item .item_text{
+        font-size: 1em;
     }
 }
 
