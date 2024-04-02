@@ -208,9 +208,12 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
 
-
-
+.delivery .delivery_container{
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
 .delivery .blocks{
@@ -248,6 +251,12 @@ body{
 
 .feedback {
     background-color: #FCEFE4;
+}
+
+.feedback .feedback_container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .feedback .form_title{
@@ -485,5 +494,171 @@ textarea {
     width: 100%;
     height: 200px;
     border-radius: 20px;
+}
+
+@media (min-width: 0px) and (max-width: 768px){
+    .our_bouquets .photo1 {
+        width: 100%;
+        max-width: 350px;
+        height: 350px;
+        align-self: end;
+        margin-bottom: 65px;
+    }
+
+    .our_bouquets .photo2 {
+        width: 100%;
+        max-width: 350px;
+        height: 350px;
+        margin-bottom: 65px;
+        position: static;
+    }
+
+    .our_bouquets .photo3 {
+        width: 100%;
+        max-width: 350px;
+        height: 350px;
+        /* align-self: end; */
+        position: static;
+    }
+
+
+    .delivery .delivery_container{
+        display: block;
+    }
+
+    .delivery .blocks{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    .delivery .blocks .block{
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .delivery .blocks .large_block{
+
+    }
+
+    .delivery .blocks .delivery_title{
+        line-height: 30px;
+
+        text-align: center;
+    }
+
+    .feedback .feedback_container{
+        display: block;
+    }
+
+    .feedback .form_title{
+        margin: 0;
+    }
+
+    .feedback .form_button{
+        margin-bottom: 8px;
+    }
+
+    .feedback .feedback-form .feedback_inputs{
+        width: 100%;
+    }
+
+    .feedback .feedback-form .feedback_inputs input{
+        width: 100%;
+        padding: 16px;
+    }
+
+    .feedback .feedback-form .feedback_inputs .feedback_large-input{
+        width: 100%;
+        padding: 16px;
+    }
+
+    .feedback .img-container{
+        width: 100%;
+        height: 250px;
+
+    }
+
+    .feedback .img-container .box{
+        width: 75%;
+        height: 200px;
+
+        margin-left: 27%;
+    }
+
+    .reviews .reviews_title{
+
+    }
+
+    .reviews .reviews_carousel{
+        display: none;
+    }
+
+    .reviews .reviews_carousel_min{
+        display: block;
+    }
+
+    .reviews .reviews_carousel_min{
+        font-family: Montserrat;
+        font-size: 1em;
+        font-weight: 500;
+        line-height: 43.88px;
+
+    }
+
+    .reviews .reviews_carousel_min .item{
+        min-height: 200px;
+        width: 100%;
+
+        background-color: #FCEFE4;
+        border: 1px solid #D7537A;
+        border-radius: 43px;
+
+        padding: 20px;
+
+        -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+        -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+        box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    }
+
+    .reviews .reviews_carousel_min .item .item_title{
+        margin: 0;
+    }
+
+    .reviews .form_button{
+        margin-bottom: 0;
+    }
+}
+
+@media(min-width: 768px) {
+    .out_bouquets{
+
+    }
+
+
+    .delivery .delivery_container{
+        display: flex;
+    }
+
+    .delivery .delivery_container .blocks{
+        display: flex;
+    }
+
+    .delivery .delivery_container .blocks .block{
+        width: 30%;
+    }
+
+
+
+    .delivery .delivery_container .blocks .large_block{
+        width: 50%;
+    }
+
 
 }

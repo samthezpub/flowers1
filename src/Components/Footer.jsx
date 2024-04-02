@@ -49,9 +49,11 @@ export default function Footer() {
 
                     <p className="footer_copyright">©2021. Все права защищены </p>
                 </div>
-                <iframe
-                    src="https://yandex.ru/map-widget/v1/?um=constructor%3A56a73a374aec08d02fd87158a17b0832884d4956ef0ecbcdf9a9e61feeb70dc0&amp;source=constructor"
-                    width="500" height="400" frameBorder="0"></iframe>
+                <div className="map">
+                    <iframe
+                        src="https://yandex.ru/map-widget/v1/?um=constructor%3A56a73a374aec08d02fd87158a17b0832884d4956ef0ecbcdf9a9e61feeb70dc0&amp;source=constructor"
+                        width="100%" height="100%" frameBorder="0"></iframe>
+                </div>
             </div>
 
             <div className="bottom">

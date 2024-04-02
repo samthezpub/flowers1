@@ -67,3 +67,27 @@
     display: flex;
     justify-content: space-around;
 }
+
+@media(min-width: 0px) and (max-width: 769px){
+    .navbar .hamburger{
+        display: block;
+    }
+
+    .navbar .list{
+        display: none;
+    }
+
+    .navbar .button{
+        display: none;
+    }
+
+    .navbar .logo_conctainer .logo{
+        width: 40%;
+        height: 40%;
+    }
+
+    .navbar .social-media .footer_social-media_element img{
+        width: 20px;
+        height: 20px;
+    }
+}

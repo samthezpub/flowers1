@@ -96,6 +96,7 @@ export default function Main() {
 
                 // Сортировка по позиции
                 reviewList = positionSort(filteredReviews)
+                setReviewList(reviewList)
                 console.log(reviewList)
 
 
@@ -199,12 +200,13 @@ export default function Main() {
                 <Container maxWidth={'xl'} style={{height: "100%", display: "flex", alignItems: "flex-end"}}>
                     <div className="main_info">
                         <h2 className="info_title">Собираем букеты, созданные для Вас</h2>
-                        <a className="info_button" href="#our_bouquets">Выбрать букет</a>
+                        <a className="info_button" href="#feedback">Выбрать букет</a>
                     </div>
                 </Container>
             </section>
             <section className="our_bouquets" id="our_bouquets">
                 <Container maxWidth={"xl"} style={{height: "100%"}}>
+
                     <h2 className="our_bouquets_title">Наши работы</h2>
                     <div className="cards">
                         <img className="photo1" src={photo1} alt=""/>
@@ -234,87 +236,132 @@ export default function Main() {
 
             <section className="delivery" id="delivery">
                 <Container maxWidth={"x"} style={{display: "flex", alignItems: "center", height: "100%"}}>
-                    <div className="blocks">
-                        <div className="block">
-                            <h2 className="delivery_title">Доставка</h2>
-                            <p className="delivery_description">Возьмём на себя все заботы по созданию, оформлению и
-                                доставке корпоративных букетов в обычные и праздничные дни за разумные деньги</p>
-                        </div>
-                        <div className="block large_block">
-                            <h2 className="delivery_title">Инструкции по применению</h2>
-                            <p className="delivery_description">Хранить такие букеты лучше в прохладном месте (в
-                                холодильнике, сняв или надрезав прозрачную упаковку). А вот прямых солнечных лучей и
-                                жары они не любят. Часто в составе наших букетов присутствует живая и искусственная
-                                растительность - это декор. Все остальные ингредиенты в букетах - съедобные. Мы закупаем
-                                их персонально под каждый букет накануне сборки. Все ингредиенты и растительность
-                                обработана по специальному многочасовому протоколу.</p>
+                    <div className="delivery_container">
+                        <div className="blocks">
+                            <div className="block">
+                                <h2 className="delivery_title">Доставка</h2>
+                                <p className="delivery_description">Возьмём на себя все заботы по созданию, оформлению и
+                                    доставке корпоративных букетов в обычные и праздничные дни за разумные деньги</p>
+                            </div>
+                            <div className="block large_block">
+                                <h2 className="delivery_title">Инструкции по применению</h2>
+                                <p className="delivery_description">Хранить такие букеты лучше в прохладном месте (в
+                                    холодильнике, сняв или надрезав прозрачную упаковку). А вот прямых солнечных лучей и
+                                    жары они не любят. Часто в составе наших букетов присутствует живая и искусственная
+                                    растительность - это декор. Все остальные ингредиенты в букетах - съедобные. Мы
+                                    закупаем
+                                    их персонально под каждый букет накануне сборки. Все ингредиенты и растительность
+                                    обработана по специальному многочасовому протоколу.</p>
+                            </div>
                         </div>
                     </div>
                 </Container>
             </section>
 
             <section className="feedback" id="feedback">
-                <Container maxWidth={"x"} style={{display:"flex", alignItems:"center", justifyContent:"space-around"}}>
+                <Container maxWidth={"x"}
+                           style={{}}>
                     {/*<form method="post">*/}
 
-                    <div>
-                        <h2 className="form_title">Предложи свой бюджет</h2>
-                        <div className="feedback-form">
-                            <div className="feedback_inputs">
-                                <input placeholder="Имя" className="feedback_input input" name="name" id="name"/>
-                                <input placeholder="Телефон" onChange={(event) => {
-                                    ValidateInput(event)
-                                }} className="feedback_input input" name="phone" id="phone"/>
-                                <textarea placeholder="Ваша идея" className="feedback_large-input input" name="idea"
-                                          id="idea"/>
+                    <div className="feedback_container">
+                        <div>
+                            <h2 className="form_title">Предложи свою композицию</h2>
+                            <div className="feedback-form">
+                                <div className="feedback_inputs">
+                                    <input placeholder="Имя" className="feedback_input input" name="name" id="name"/>
+                                    <input placeholder="Телефон" onChange={(event) => {
+                                        ValidateInput(event)
+                                    }} className="feedback_input input" name="phone" id="phone"/>
+                                    <textarea placeholder="Ваша идея" className="feedback_large-input input" name="idea"
+                                              id="idea"/>
+                                </div>
                             </div>
+                            <button className="form_button" onClick={submitForm}>Отправить</button>
                         </div>
-                        <button className="form_button" onClick={submitForm}>Отправить</button>
-                    </div>
 
-                    <div>
-                        <Gallery></Gallery>
-                    </div>
+                        <div>
+                            <Gallery></Gallery>
+                        </div>
 
-                    {/*</form>*/}
+                        {/*</form>*/}
+                    </div>
                 </Container>
             </section>
 
-            <section className="reviews">
+            <section className="reviews" id="reviews">
                 <h2 className="reviews_title">Отзывы</h2>
                 <Container maxWidth="xl">
-                    <Carousel
-                        className="reviews_carousel"
-                        indicatorIconButtonProps={{
-                            style: {
-                                color: 'pink',
 
-                                marginTop: "10px"
-                            }
-                        }}
-                        activeIndicatorIconButtonProps={{
-                            style: {
-                                backgroundColor: 'crimson'
-                            }
-                        }}
-                        indicatorContainerProps={{
-                            style: {
-                                marginTop: '15px'
-                            }
-                        }}
-                        navButtonsAlwaysInvisible={true}
-                        animation="fade"
-                        duration={1000}
-                    >
-                        {slides.map((slide, index) => (
-                            <div key={index} style={{display: 'flex', justifyContent: "space-around", height: "300px"}}>
-                                {slide.map((item, i) => (
-                                    <Item key={i} name={item.client_name} rating={parseInt(item.rating)}
-                                          text={item.comment}/>
+                    <div>
+                        <Carousel
+                            className="reviews_carousel"
+                            indicatorIconButtonProps={{
+                                style: {
+                                    color: 'pink',
+
+                                    marginTop: "10px"
+                                }
+                            }}
+                            activeIndicatorIconButtonProps={{
+                                style: {
+                                    backgroundColor: 'crimson'
+                                }
+                            }}
+                            indicatorContainerProps={{
+                                style: {
+                                    marginTop: '15px'
+                                }
+                            }}
+                            navButtonsAlwaysInvisible={true}
+                            animation="fade"
+                            duration={1000}
+                        >
+                            {slides.map((slide, index) => (
+                                <div key={index}
+                                     style={{display: 'flex', justifyContent: "space-around", height: "300px"}}>
+                                    {slide.map((item, i) => (
+                                        <Item key={i} name={item.client_name} rating={parseInt(item.rating)}
+                                              text={item.comment}/>
+                                    ))}
+                                </div>
+                            ))}
+                        </Carousel>
+
+                        <div>
+                            <Carousel
+                                className="reviews_carousel_min"
+                                indicatorIconButtonProps={{
+                                    style: {
+                                        color: 'pink',
+
+                                        marginTop: "10px"
+                                    }
+                                }}
+                                activeIndicatorIconButtonProps={{
+                                    style: {
+                                        backgroundColor: 'crimson'
+                                    }
+                                }}
+                                indicatorContainerProps={{
+                                    style: {
+                                        marginTop: '15px'
+                                    }
+                                }}
+                                navButtonsAlwaysInvisible={true}
+                                animation="fade"
+                                duration={1000}
+                            >
+                                {reviewList.map((slide, index) => (
+                                    <div key={index}
+                                         style={{display: 'flex', justifyContent: "space-around", height: "300px"}}>
+                                            <Item key={index} name={slide.client_name} rating={parseInt(slide.rating)}
+                                                  text={slide.comment}/>
+                                    </div>
                                 ))}
-                            </div>
-                        ))}
-                    </Carousel>
+                            </Carousel>
+                        </div>
+
+                    </div>
 
                     <button className="form_button" onClick={handleOpen}>Добавить отзыв</button>
 
