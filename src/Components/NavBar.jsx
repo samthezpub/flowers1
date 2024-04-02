@@ -65,7 +65,7 @@ export default function NavBar() {
                         color="inherit"
                         aria-label="open drawer"
                         onClick={toggleDrawer(true)}
-                        sx={{ display: { xs: 'block', sm: 'none',}, padding:0, marginLeft:"8px", height:"90%" }}>
+                        sx={{ display: { xs: 'block', md: 'none',}, padding:0, marginLeft:"8px", height:"90%" }}>
                         <MenuIcon fontSize={"small"}/>
                     </IconButton>
 

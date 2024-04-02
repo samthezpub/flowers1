@@ -209,23 +209,29 @@ export default function Main() {
 
                     <h2 className="our_bouquets_title">Наши работы</h2>
                     <div className="cards">
-                        <img className="photo1" src={photo1} alt=""/>
-                        <div className="card card1">
+                        <div className="image_and_card">
+                            <img className="photo1" src={photo1} alt=""/>
+                            <div className="card card1">
                             <span className="card_text">
                                 Любой букет из клубники, цветов и других ягод можно собрать на любой бюджет, добавив ингредиенты на ваш вкус
                             </span>
+                            </div>
                         </div>
 
-
-                        <img className="photo2" src={photo2} alt=""/>
-                        <div className="card card2">
-                            Любой мужской букет можно собрать на любой бюджет, добавив ингредиенты на ваш вкус
+                        <div className="image_and_card">
+                            <img className="photo2" src={photo2} alt=""/>
+                            <div className="card card2">
+                                Любой мужской букет можно собрать на любой бюджет, добавив ингредиенты на ваш вкус
+                            </div>
                         </div>
 
-                        <img className="photo3" src={photo3} alt=""/>
-                        <div className="card card3">
-                            Букет из фруктов и цветов можно собрать на любой бюджет, добавив ингредиенты на ваш вкус
-                        </div>
+                            <div className="image_and_card">
+                                <img className="photo3" src={photo3} alt=""/>
+                                <div className="card card3">
+                                    Букет из фруктов и цветов можно собрать на любой бюджет, добавив ингредиенты на ваш
+                                    вкус
+                                </div>
+                            </div>
                     </div>
                 </Container>
                 <img src={lepestok4} alt="" className="lepestok1"/>
@@ -354,8 +360,8 @@ export default function Main() {
                                 {reviewList.map((slide, index) => (
                                     <div key={index}
                                          style={{display: 'flex', justifyContent: "space-around", height: "300px"}}>
-                                            <Item key={index} name={slide.client_name} rating={parseInt(slide.rating)}
-                                                  text={slide.comment}/>
+                                        <Item key={index} name={slide.client_name} rating={parseInt(slide.rating)}
+                                              text={slide.comment}/>
                                     </div>
                                 ))}
                             </Carousel>
