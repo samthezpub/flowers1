@@ -15,13 +15,18 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-
+import '../index.css'
 import '../CSS/navbar.css'
 
 import logo from '../Pictures/NavBar/logo.png'
 
+import map from '../Pictures/NavBar/map.png'
+import phone from '../Pictures/NavBar/phone.png'
+
 import whatsapp from '../Pictures/NavBar/whatsapp.png'
 import telegram from '../Pictures/NavBar/telegram.png'
+
+import cross from '../Pictures/NavBar/cross.png'
 
 export default function NavBar() {
     const [open, setState] = useState(false);
@@ -37,15 +42,23 @@ export default function NavBar() {
                 <ul className="list">
                     <li className="list_element"><a href="#our_bouquets">Наши букеты</a></li>
                     <li className="list_element"><a href="#delivery">Доставка</a></li>
-                    <li className="list_element"><a href="#footer">Контакты</a></li>
                     <li className="list_element"><a href="#reviews">Отзывы</a></li>
                 </ul>
 
                 <a href="#main" className="logo_conctainer">
-                <img src={logo} width={231} height={119} className="logo"/>
+                    <img src={logo} width={250} className="logo"/>
                 </a>
 
-                <a className="button" href="#footer">Связаться</a>
+                <div className="button" href="#footer">
+                    <a href="https://yandex.ru/maps/10366/mariupol/?from=mapframe&ll=37.551820%2C47.099094&mode=usermaps&source=mapframe&um=constructor%3A56a73a374aec08d02fd87158a17b0832884d4956ef0ecbcdf9a9e61feeb70dc0&utm_source=mapframe&z=15" className="navbar_contact">
+                        <span className="text">г.Мариуполь, Энгельса 60, офис 106</span>
+                    </a>
+
+                    <a className="navbar_contact" href={"tel:+794900000000"}>
+                        <img src={phone} width={21} height={21} className={"navbar_contact_image"}/>
+                        <span className="text">+7 (949) 739-04-66</span>
+                    </a>
+                </div>
 
                 <div className="social-media">
                     <a href="https://wa.me/номер" target="_blank" className="footer_social-media_element">
@@ -65,7 +78,7 @@ export default function NavBar() {
                         color="inherit"
                         aria-label="open drawer"
                         onClick={toggleDrawer(true)}
-                        sx={{ display: { xs: 'block', md: 'none',}, padding:0, marginLeft:"8px", height:"90%" }}>
+                        sx={{display: {xs: 'block', md: 'none',}, padding: 0, marginLeft: "8px", height: "90%"}}>
                         <MenuIcon fontSize={"small"}/>
                     </IconButton>
 
@@ -81,13 +94,39 @@ export default function NavBar() {
                         onClose={toggleDrawer(false)} //function that is called when the drawer should close
                     >
 
-                        <Box style={{width:"100vw", textAlign:"center"}}>
-                            <ul className="list">
-                                <li className="list_element"><a onClick={toggleDrawer(false)} href="#our_bouquets">Наши букеты</a></li>
-                                <li className="list_element"><a onClick={toggleDrawer(false)} href="#delivery">Доставка</a></li>
-                                <li className="list_element"><a onClick={toggleDrawer(false)} href="#footer">Контакты</a></li>
-                                <li className="list_element"><a onClick={toggleDrawer(false)} href="#reviews">Отзывы</a></li>
-                            </ul>
+                        <Box style={{width: "100vw", textAlign: "center", background:"#ffe1d6"}}>
+                            <div style={{height: "100vh", position: "relative"}} className="drawer">
+                                <img width={"300px"} height={"150px"} src={logo} className={"logo_drawer"}/>
+
+                                <div className="button" href="#footer">
+                                    <a href="https://yandex.ru/maps/10366/mariupol/?from=mapframe&ll=37.551820%2C47.099094&mode=usermaps&source=mapframe&um=constructor%3A56a73a374aec08d02fd87158a17b0832884d4956ef0ecbcdf9a9e61feeb70dc0&utm_source=mapframe&z=15"
+                                       className="navbar_contact">
+                                        <img src={map} width={21} height={21} className={"navbar_contact_image"}/>
+                                        <span className="text">г.Мариуполь, Энгельса 60, офис 106</span>
+                                    </a>
+
+                                    <a className="navbar_contact" href={"tel:+794900000000"}>
+                                        <img src={phone} width={21} height={21} className={"navbar_contact_image"}/>
+                                        <span className="text">+7 (949) 739-04-66</span>
+                                    </a>
+                                </div>
+                                <ul className="list-drawer">
+                                    <li className="list_element"><a onClick={toggleDrawer(false)} href="#our_bouquets">Наши
+                                        букеты</a></li>
+                                    <li className="list_element"><a onClick={toggleDrawer(false)}
+                                                                    href="#delivery">Доставка</a></li>
+                                    <li className="list_element"><a onClick={toggleDrawer(false)}
+                                                                    href="#footer">Контакты</a></li>
+                                    <li className="list_element"><a onClick={toggleDrawer(false)}
+                                                                    href="#reviews">Отзывы</a></li>
+                                </ul>
+
+                                <img src={cross} onClick={toggleDrawer(false)}
+                                     style={{position: "absolute", top: "5px", right: "5px"}}/>
+
+                            </div>
+
+
                         </Box>
                     </Drawer>
                 </div>

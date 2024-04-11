@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Backdrop from '@mui/material/Backdrop';
+import InputMask from 'react-input-mask';
 import Carousel from 'react-material-ui-carousel'
 import Item from '../Components/Item'
 import Gallery from '../Components/Gallery'
@@ -14,16 +15,21 @@ import Gallery from '../Components/Gallery'
 
 import '../CSS/main.css'
 
-import main_bg from '../Pictures/Main/main-bg.png'
+import main_bg from '../Pictures/Main/main-bg.jpg'
 
-import photo1 from '../Pictures/Main/photo1.jpg'
-import photo2 from '../Pictures/Main/photo2.jpg'
-import photo3 from '../Pictures/Main/photo3.jpg'
+import photo1 from '../Pictures/Main/01.jpg'
+import photo2 from '../Pictures/Main/02.jpg'
+import photo3 from '../Pictures/Main/03.jpg'
 
 import lepestok1 from '../Pictures/Main/lepestok1.png'
 import lepestok2 from '../Pictures/Main/lepestok2.png'
 import lepestok3 from '../Pictures/Main/lepestok3.png'
 import lepestok4 from '../Pictures/Main/lepestok4.png'
+
+import delivery_icon from '../Pictures/Main/delivery.png'
+import instructions_icon from '../Pictures/Main/bumaga.png'
+import delivery_left from '../Pictures/Main/delivery-left.png'
+import delivery_right from '../Pictures/Main/delivery-right.png'
 
 import feedback_image from '../Pictures/Main/feedback-bg.jpg'
 
@@ -39,16 +45,37 @@ const style = {
     p: 4,
 };
 
+const styleIdea = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
+
 export default function Main() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const [openIdeaModal, setOpenIdeaModal] = useState(false);
+    const handleIdeaOpen = () => setOpen(true);
+    const handleIdeaClose = () => setOpen(false);
+
+    const [openReviewModal, setOpenReviewModal] = useState(false);
+    const handleReviewOpen = () => setOpen(true);
+    const handleReviewClose = () => setOpen(false);
+
     const [modalRatingValue, setModalRatingValue] = useState(4);
-
     const [reviewList, setReviewList] = useState([])
-
     const [slides, setSlides] = useState([])
+
+    const [messageIdeaIsShown, setMessageIdeaIsShown] = useState(false)
+    const [messageModalFormIsShown, setMessageModalFormIsShown] = useState(false)
 
     useEffect(() => {
         getAllReviews()
@@ -76,7 +103,7 @@ export default function Main() {
         // Get CSRF token
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-        let repsonce = axios.get("http://test-flowers.web-command.ru/api/rating/getAllReview", {
+        let repsonce = axios.get("https://www.clever-mrpl.ru/api/rating/getAllReview", {
 
             headers: {
                 'Content-Type': 'application/json',
@@ -90,14 +117,12 @@ export default function Main() {
             .then((resp) => {
 
                 let reviewList = resp.data; // Ваш массив с данными отзывов
-                console.log(reviewList)
 
                 let filteredReviews = reviewList.filter(review => review.is_show);
 
                 // Сортировка по позиции
                 reviewList = positionSort(filteredReviews)
                 setReviewList(reviewList)
-                console.log(reviewList)
 
 
                 let slidesTemp = [];
@@ -114,18 +139,32 @@ export default function Main() {
 
     }
 
+    async function waitIdea() {
+        // Создаем промис, который разрешится через 5 секунд
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+        // Ждем 5 секунд
+        await delay(5000);
+
+        setOpenIdeaModal(false)
+    }
+
     function submitForm() {
+        setOpenIdeaModal(true)
+        waitIdea()
+
 
         // Get form data
         const name = document.getElementById("name").value;
-        const phone = document.getElementById('phone').value;
+        const phone = document.getElementById('phone').value.toString();
         const idea = document.getElementById('idea').value;
+
 
         // Get CSRF token
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         // Send data to PHP script using AJAX
-        fetch('http://test-flowers.web-command.ru/api/greeting', {
+        fetch('https://www.clever-mrpl.ru/api/greeting', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -135,17 +174,27 @@ export default function Main() {
         })
             .then(response => response.text())
             .then(data => {
-                console.log('Success:', data);
-                // Handle successful submission (optional: show a success message)
+
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Handle errors (optional: show an error message)
             });
     }
 
+    async function waitReview() {
+        // Создаем промис, который разрешится через 5 секунд
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+        // Ждем 5 секунд
+        await delay(5000);
+
+        setOpenReviewModal(false)
+    }
 
     function submitRatingForm() {
+
+        setOpenReviewModal(true)
+        waitReview()
 
         // Get form data
         const name = document.getElementById("modal-name").value;
@@ -157,7 +206,7 @@ export default function Main() {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         // Send data to PHP script using AJAX
-        fetch('http://test-flowers.web-command.ru/api/rating', {
+        fetch('https://www.clever-mrpl.ru/api/rating', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -167,7 +216,7 @@ export default function Main() {
         })
             .then(response => response.text())
             .then(data => {
-                console.log('Success:', data);
+
                 // Handle successful submission (optional: show a success message)
             })
             .catch(error => {
@@ -178,29 +227,13 @@ export default function Main() {
         setOpen(false)
     }
 
-
-    function ValidateInput(e) {
-        var input = e.target;
-        var maxLength = 12;
-        var regex = /^\+?\d*$/; // Регулярное выражение для цифр и знака плюса
-
-        if (!regex.test(input.value)) {
-            input.value = ""; // Очистка поля ввода, если введены недопустимые символы
-        }
-
-        if (input.value.length > maxLength) {
-            input.value = input.value.slice(0, maxLength);
-        }
-    }
-
-
     return (
         <>
             <section id="main" className="main">
                 <Container maxWidth={'xl'} style={{height: "100%", display: "flex", alignItems: "flex-end"}}>
                     <div className="main_info">
-                        <h2 className="info_title">Собираем букеты, созданные для Вас</h2>
-                        <a className="info_button" href="#feedback">Выбрать букет</a>
+                        <h2 className="info_title">Собираем съедобные букеты для Вас</h2>
+                        <a className="info_button" href="#feedback">Заказать букет</a>
                     </div>
                 </Container>
             </section>
@@ -210,7 +243,7 @@ export default function Main() {
                     <h2 className="our_bouquets_title">Наши работы</h2>
                     <div className="cards">
                         <div className="image_and_card">
-                            <img className="photo1" src={photo1} alt=""/>
+                            <img className="photo1" src={photo1} alt="Съедобный букет 1"/>
                             <div className="card card1">
                             <span className="card_text">
                                 Любой букет из клубники, цветов и других ягод можно собрать на любой бюджет, добавив ингредиенты на ваш вкус
@@ -219,14 +252,14 @@ export default function Main() {
                         </div>
 
                         <div className="image_and_card">
-                            <img className="photo2" src={photo2} alt=""/>
+                            <img className="photo2" src={photo2} alt="Съедобный букет 2"/>
                             <div className="card card2">
                                 Любой мужской букет можно собрать на любой бюджет, добавив ингредиенты на ваш вкус
                             </div>
                         </div>
 
                             <div className="image_and_card">
-                                <img className="photo3" src={photo3} alt=""/>
+                                <img className="photo3" src={photo3} alt="Съедобный букет 3"/>
                                 <div className="card card3">
                                     Букет из фруктов и цветов можно собрать на любой бюджет, добавив ингредиенты на ваш
                                     вкус
@@ -234,23 +267,29 @@ export default function Main() {
                             </div>
                     </div>
                 </Container>
-                <img src={lepestok4} alt="" className="lepestok1"/>
-                <img src={lepestok2} alt="" className="lepestok2"/>
-                <img src={lepestok3} alt="" className="lepestok3"/>
-                <img src={lepestok1} alt="" className="lepestok4"/>
+                <img src={lepestok4} alt="лепесточек1" className="lepestok1"/>
+                <img src={lepestok2} alt="лепесточек2" className="lepestok2"/>
+                <img src={lepestok3} alt="лепесточек3" className="lepestok3"/>
+                <img src={lepestok1} alt="лепесточек4" className="lepestok4"/>
             </section>
 
             <section className="delivery" id="delivery">
                 <Container maxWidth={"x"} style={{display: "flex", alignItems: "center", height: "100%"}}>
                     <div className="delivery_container">
                         <div className="blocks">
-                            <div className="block">
-                                <h2 className="delivery_title">Доставка</h2>
+                            <div className="block block1">
+                                <div className="block_elements">
+                                    <h2 className="delivery_title">Доставка</h2>
+                                    <img src={delivery_icon} alt="доставка иконка" className="delivery_icon"/>
+                                </div>
                                 <p className="delivery_description">Возьмём на себя все заботы по созданию, оформлению и
                                     доставке корпоративных букетов в обычные и праздничные дни за разумные деньги</p>
                             </div>
-                            <div className="block large_block">
-                                <h2 className="delivery_title">Инструкции по применению</h2>
+                            <div className="block large_block block2">
+                                <div className="block_elements">
+                                    <h2 className="delivery_title">Инструкции по применению</h2>
+                                    <img src={instructions_icon} alt="инструкции иконка" className="delivery_icon"/>
+                                </div>
                                 <p className="delivery_description">Хранить такие букеты лучше в прохладном месте (в
                                     холодильнике, сняв или надрезав прозрачную упаковку). А вот прямых солнечных лучей и
                                     жары они не любят. Часто в составе наших букетов присутствует живая и искусственная
@@ -258,6 +297,8 @@ export default function Main() {
                                     закупаем
                                     их персонально под каждый букет накануне сборки. Все ингредиенты и растительность
                                     обработана по специальному многочасовому протоколу.</p>
+                                <img src={delivery_left} width={"45%"} className="delivery_image-left" alt="доставка иконка левая"/>
+                                <img src={delivery_right} width={"450px"} height={"500px"} className="delivery_image-right" alt="доставка иконка правая"/>
                             </div>
                         </div>
                     </div>
@@ -275,17 +316,31 @@ export default function Main() {
                             <div className="feedback-form">
                                 <div className="feedback_inputs">
                                     <input placeholder="Имя" className="feedback_input input" name="name" id="name"/>
-                                    <input placeholder="Телефон" onChange={(event) => {
-                                        ValidateInput(event)
-                                    }} className="feedback_input input" name="phone" id="phone"/>
+                                    <InputMask mask="+7\(999) 99 999 99" maskChar={null} placeholder='Телефон' className="feedback_input input" name="phone" id="phone"/>
                                     <textarea placeholder="Ваша идея" className="feedback_large-input input" name="idea"
                                               id="idea"/>
                                 </div>
                             </div>
                             <button className="form_button" onClick={submitForm}>Отправить</button>
+
+                            <Modal
+                                open={openIdeaModal}
+                                onClose={handleIdeaClose}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                            >
+                                <Box sx={styleIdea}>
+                                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                                        Мы получили ваш отзыв! 🌸
+                                    </Typography>
+                                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                        Спасибо за доверие. Мы свяжемся с вами в ближайшее время для уточнения деталей.
+                                    </Typography>
+                                </Box>
+                            </Modal>
                         </div>
 
-                        <div>
+                        <div className="gallery_container">
                             <Gallery></Gallery>
                         </div>
 
@@ -301,11 +356,12 @@ export default function Main() {
                     <div>
                         <Carousel
                             className="reviews_carousel"
+                            height={300}
                             indicatorIconButtonProps={{
                                 style: {
                                     color: 'pink',
 
-                                    marginTop: "10px"
+                                    marginTop: "35px"
                                 }
                             }}
                             activeIndicatorIconButtonProps={{
@@ -324,7 +380,7 @@ export default function Main() {
                         >
                             {slides.map((slide, index) => (
                                 <div key={index}
-                                     style={{display: 'flex', justifyContent: "space-around", height: "300px"}}>
+                                     style={{display: 'flex', justifyContent: "space-around", height: "100%"}}>
                                     {slide.map((item, i) => (
                                         <Item key={i} name={item.client_name} rating={parseInt(item.rating)}
                                               text={item.comment}/>
@@ -336,11 +392,12 @@ export default function Main() {
                         <div>
                             <Carousel
                                 className="reviews_carousel_min"
+                                height={300}
                                 indicatorIconButtonProps={{
                                     style: {
                                         color: 'pink',
 
-                                        marginTop: "10px"
+                                        marginTop: "35px"
                                     }
                                 }}
                                 activeIndicatorIconButtonProps={{
@@ -366,7 +423,21 @@ export default function Main() {
                                 ))}
                             </Carousel>
                         </div>
-
+                        <Modal
+                            open={openReviewModal}
+                            onClose={handleReviewClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Box sx={styleIdea}>
+                                <Typography id="modal-modal-title" variant="h6" component="h2">
+                                    Мы получили ваш заказ! 🌸
+                                </Typography>
+                                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                    Мы ценим ваше мнение и благодарим вас за то, что поделились им с нами. Ваш отзыв помогает нам стать лучше для вас и наших других клиентов.
+                                </Typography>
+                            </Box>
+                        </Modal>
                     </div>
 
                     <button className="form_button" onClick={handleOpen}>Добавить отзыв</button>
@@ -409,9 +480,7 @@ export default function Main() {
                                     <Typography id="modal-modal-phone" variant="h6" component="h2">
                                         Ваш номер
                                     </Typography>
-                                    <input className="input" name="phone" id="modal-phone" onChange={(event) => {
-                                        ValidateInput(event)
-                                    }}/>
+                                    <InputMask mask="+7\(999) 99 999 99" maskChar={null}  className="input" name="phone" id="modal-phone"/>
 
                                     <Typography id="modal-modal-message" variant="h6" component="h2">
                                         Введите сообщение

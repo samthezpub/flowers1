@@ -1,7 +1,17 @@
-
+body{
+    position: relative;
+}
 
 
 .navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 999;
+
+    width: 100%;
+
     font-family: Montserrat;
     font-size: 1.5em;
     font-weight: 600;
@@ -26,6 +36,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     
     font-family: Montserrat;
     font-size: 0.8em;
@@ -33,16 +44,31 @@
     line-height: 29.26px;
     text-align: center;
 
-    width: 200px;
-    height: 55px;
+    width: 450px;
 
-    background: #D7537A;
-    color: #FFFFFF;
+
+    color: black;
 
     border: 0;
-    border-radius: 9999px;
+    border-radius: 20px;
 
     cursor: pointer;
+}
+
+.navbar .navbar_contact{
+    display: flex;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+}
+
+.navbar .navbar_contact .navbar_contact_image{
+    margin-right: 10px;
+}
+
+.navbar .navbar_contact .text{
+    width: 100%;
+    display: block;
 }
 
 .navbar .logo{
@@ -94,10 +120,59 @@
     .navbar .social-media .footer_social-media_element:not(:last-child){
         margin-right: 5px;
     }
+
+    .navbar .button{
+        display: none;
+
+    }
+
+
+
+    .drawer{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .drawer .navbar_contact{
+        display: flex;
+        align-items: center;
+    }
+
+    .drawer .navbar_contact .navbar_contact_image{
+        margin-right: 20px;
+    }
+
+    .drawer .button{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .logo_drawer{
+        margin-top: 10px;
+    }
+
+    .list-drawer{
+        list-style: none;
+    }
+
+    .list-drawer .list_element{
+        font-size: 1.8em;
+
+        font-family: 'Nyasha Sans';
+    }
 }
 
 @media (min-width: 769px) and (max-width: 1200px){
     .navbar .list .list_element{
         font-size: 0.5em;
     }
+
+    .navbar .navbar_contact .text{
+        font-size: 0.8em;
+    }
+
+
 }
